@@ -1,0 +1,14 @@
+[project]
+name = "OnPremCloud"
+version = "0.0.0"
+authors = [
+    {name = "Pravin", email = "pravinofficial.code@gmail.com"}
+]
+dependencies = ["click"]
+
+[project.scripts]
+opc = "opc.cli:cli"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
