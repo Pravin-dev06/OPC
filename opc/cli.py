@@ -1,19 +1,26 @@
-from .vm import startvm, listvm
 import click
+import subprocess
 
 @click.group()
 def cli():
     pass
 
-@click.command()
+@cli.group()
+def compute():
+    pass
+
+@compute.group()
+def instances():
+    pass
+
+
+@instances.command()
 @click.argument("name")
-@click.argument("typ")
-def start(name, typ):
-    startvm(name, typ)
+@click.argument("type")
+def startvm(name, type):
+    subprocess.run(f"VBoxManage startvm {name} --type={type}".split())
 
-@click.command()
-def list():
-    listvm()
 
-cli.add_command(start, name="startvm")
-cli.add_command(list, name="listvm")
+@instances.command()
+def listvm():
+    subprocess.run("VBoxManage list vms".split())

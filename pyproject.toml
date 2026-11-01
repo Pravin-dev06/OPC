@@ -1,5 +1,5 @@
 [project]
-name = "OnPremCloud"
+name = "opc"
 version = "0.0.0"
 authors = [
     {name = "Pravin", email = "pravinofficial.code@gmail.com"}
@@ -7,7 +7,7 @@ authors = [
 dependencies = ["click"]
 
 [project.scripts]
-opc = "opc.cli:cli"
+opc = "cli:cli"
 
 [build-system]
 requires = ["hatchling"]
