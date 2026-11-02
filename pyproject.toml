@@ -4,10 +4,10 @@ version = "0.0.0"
 authors = [
     {name = "Pravin", email = "pravinofficial.code@gmail.com"}
 ]
-dependencies = ["click"]
+dependencies = ["click", "httpx", "fastapi"]
 
 [project.scripts]
-opc = "cli:cli"
+opc = "opc.cli:cli"
 
 [build-system]
 requires = ["hatchling"]
