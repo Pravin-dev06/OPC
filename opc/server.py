@@ -1,10 +1,15 @@
 from fastapi import FastAPI, APIRouter
 import subprocess
+from .vm import startvm, listvm
 
 app = FastAPI()
 router = APIRouter()
 
 @app.post("/instances/{name}/{typ}/startvm")
-def startvm(name, typ):
-    cmd = f'VBoxManage startvm "{name}" --type={typ}'
-    subprocess.run(cmd.split())
+def start(name, typ):
+    startvm(name, typ)
+
+
+@app.get('/instances/listvm')
+def list():
+    listvm()

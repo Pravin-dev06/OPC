@@ -5,16 +5,18 @@ from pathlib import Path
 import httpx
 
 @click.group()
-def cli():
-    pass
+@click.pass_context
+def cli(ctx):
+    ctx.obj = {"host": "127.0.0.1", "port": "8000"}
 
 @cli.command()
-@click.option("--host", type=str, default="127.0.0.1")
-@click.option("--port", type=str, default=8080)
+@click.option("--host")
+@click.option("--port")
 @click.pass_context
 def config(ctx, host, port):
     click.echo(f"This is your host {host}, this is your port {port}")
-    ctx.obj = {"host": host, "port": port}
+    if host: ctx.obj['host'] = host
+    if port: ctx.obj['port'] = port
     click.echo(ctx.obj)
     
 
@@ -31,10 +33,12 @@ def instances():
 @click.argument("name")
 @click.argument("typ")
 @click.pass_context
-def startvm(ctx, name, typ):
-    httpx.post(f"http://127.0.0.1:8000/instances/{name}/{typ}/startvm")
+def start(ctx, name, typ):
+    click.echo(f'this is you host{ctx.obj['host']}')
+    httpx.post(f"http://{ctx.obj['host']}:{ctx.obj['port']}/instances/{name}/{typ}/startvm")
 
 
 @instances.command()
-def listvm():
-    subprocess.run("VBoxManage list vms".split())
+@click.pass_context
+def list(ctx):
+    httpx.get(f"http://{ctx.obj['host']}:{ctx.obj['port']}/instances/listvm")
